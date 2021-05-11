@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/config": ["config"],
+      "~/constants": ["constants"],
+      "~/utils": ["utils"],
+      "~/controllers": ["controllers"],
+      "~/middlewares": ["middlewares"],
+      "~/routes": ["routes"],
+      "~/schemas": ["schemas"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
