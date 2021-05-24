@@ -4,12 +4,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Build Status](https://travis-ci.org/onurzorluer/react-image-file-resizer.svg?branch=master)](https://travis-ci.org/onurzorluer/react-image-file-resizer.svg?branch=master) [![npm version](https://badge.fury.io/js/react-image-file-resizer.svg)](https://badge.fury.io/js/react-image-file-resizer)
-
 `Expressify` is an express boilerplate for building rest api's.
 
 - Register, Login and Password Recovery calls are already a part of the boilerplate.
-- You can enhance
+- You can build api calls on top of it.
+- The boilerplate follows a rough mvc kind of structure.
 
 ## Setup
 
