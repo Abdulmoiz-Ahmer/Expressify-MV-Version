@@ -19,7 +19,7 @@ git clone https://github.com/Abdulmoiz-Ahmer/express-boiler-plate-with-mongo-con
 cd express-boiler-plate-with-mongo-configuration
 ```
 
-Add the values to the variables in .env .Env:
+Add the values to the variables in .Env:
 
 ```
 CONNECTION_STRING=MongoDB string
