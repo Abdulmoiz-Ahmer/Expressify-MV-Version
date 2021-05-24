@@ -1,5 +1,5 @@
 {
-  "name": "yardly-clone",
+  "name": "YardCrm",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Abdulmoiz Ahmer",
@@ -10,6 +10,7 @@
     "lint": "eslint \"./**/*.js\""
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.4.4",
     "bcrypt": "^5.0.1",
     "chalk": "^4.1.1",
     "cors": "^2.8.5",

@@ -2,11 +2,13 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { logger } from '~/utils';
 import { status } from '~/constants';
+import { LoginSessionSchema } from '~/schemas/LoginSession';
 
 dotenv.config();
 
-export const auth = (req, res, next) => {
-  const { UNAUTHROIZED, PRE_CONDITION_FAILED, BAD_REQUEST } = status;
+export const auth = async (req, res, next) => {
+  const { UNAUTHROIZED, PRE_CONDITION_FAILED, BAD_REQUEST, FORBIDDEN } = status;
+
   if (
     !req.headers.authorization ||
     !req.headers.authorization.toLowerCase().includes('bearer')
@@ -25,18 +27,18 @@ export const auth = (req, res, next) => {
       });
     }
 
-    // const inDataBase = await OAuthUsersModel.findOne(
-    //   { access_token: accessToken },
-    //   { _id: 1 }
-    // );
+    const inDataBase = await LoginSessionSchema.findOne(
+      { access_token: accessToken },
+      { _id: 1 },
+    );
 
-    // if (!inDataBase || !inDataBase._id) {
-    //   return res.json({
-    //     success: true,
-    //     status: constants.FORBIDDEN,
-    //     message: "Invalid Token",
-    //   });
-    // }
+    if (!inDataBase || !inDataBase._id) {
+      return res.json({
+        success: true,
+        status: FORBIDDEN,
+        message: 'Invalid Token',
+      });
+    }
 
     next();
   } catch (e) {
