@@ -64,13 +64,14 @@ export const registerUser = async (req, res) => {
 
     return res.json({
       success: true,
-      access_token_expiration_timestamp,
-      refresh_token_expiration_timestamp,
-      access_token,
-      refresh_token,
+      data: {
+        access_token_expiration_timestamp,
+        refresh_token_expiration_timestamp,
+        access_token,
+        refresh_token,
+      },
       status: OK,
     });
-    
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({

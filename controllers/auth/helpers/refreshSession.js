@@ -55,7 +55,7 @@ export const refreshSession = async (req, res) => {
     const access_token_expiration_timestamp = expirationDate.getTime();
     const refresh_token_expiration_timestamp =
       access_token_expiration_timestamp;
-      
+
     await LoginSessionSchema.updateOne(
       { _id: inDataBase._id },
       {
@@ -70,11 +70,13 @@ export const refreshSession = async (req, res) => {
 
     return res.json({
       success: true,
-      access_token_expiration_timestamp,
-      refresh_token_expiration_timestamp,
-      access_token,
-      refresh_token,
-      remember_me: inDataBase.remember_me,
+      data: {
+        access_token_expiration_timestamp,
+        refresh_token_expiration_timestamp,
+        access_token,
+        refresh_token,
+        remember_me: inDataBase.remember_me,
+      },
       status: OK,
     });
   } catch (e) {

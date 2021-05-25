@@ -66,10 +66,11 @@ export const confirmCodePasswordRecovery = async (req, res) => {
 
     return res.json({
       success: true,
-      data: true,
+      data: {
+        code_catched: true,
+      },
       status: OK,
     });
-    
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({

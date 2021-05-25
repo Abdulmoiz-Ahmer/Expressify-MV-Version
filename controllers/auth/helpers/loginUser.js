@@ -65,7 +65,7 @@ export const loginUser = async (req, res) => {
     };
 
     if (remember_me) newSessionObj.remember_me = remember_me;
-    else newSessionObj.remember_me = false;
+    else remember_me = false;
 
     const newLoginSession = new LoginSessionSchema(newSessionObj);
 
@@ -73,11 +73,13 @@ export const loginUser = async (req, res) => {
 
     return res.json({
       success: true,
-      access_token_expiration_timestamp,
-      refresh_token_expiration_timestamp,
-      access_token,
-      refresh_token,
-      remember_me,
+      data: {
+        access_token_expiration_timestamp,
+        refresh_token_expiration_timestamp,
+        access_token,
+        refresh_token,
+        remember_me,
+      },
       status: OK,
     });
   } catch (e) {

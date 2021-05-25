@@ -33,11 +33,12 @@ export const resetPassword = async (req, res) => {
     );
 
     return res.json({
-      success: true,
-      data: 'updated',
+     success: true,
+      data: {
+        message: 'Otp sent please check your email',
+      },
       status: OK,
     });
-    
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({
