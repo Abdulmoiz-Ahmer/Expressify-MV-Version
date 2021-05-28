@@ -36,13 +36,30 @@ export const registerUser = async (req, res) => {
       parseInt(process.env.SALT_ROUNDS, 10),
     );
 
-    const access_token = jwt.sign({ user_id: newUser._id }, hash, {
-      expiresIn: '7d',
-    });
+    const access_token = jwt.sign(
+      {
+        user: {
+          user_id: newUser._id,
+          email: newUser.email,
+        },
+      },
+      hash,
+      {
+        expiresIn: '7d',
+      },
+    );
 
-    const refresh_token = jwt.sign({ user_id: newUser._id }, hash, {
-      expiresIn: '7d',
-    });
+    const refresh_token = jwt.sign(
+      {
+        user: {
+          user_id: newUser._id,
+        },
+      },
+      hash,
+      {
+        expiresIn: '7d',
+      },
+    );
 
     const expirationDate = new Date(
       new Date().setDate(new Date().getDate() + 7),

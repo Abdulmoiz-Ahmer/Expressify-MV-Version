@@ -1,65 +1,50 @@
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { logger } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
-import { OtpsSchema } from '~/schemas/Otps';
-import bcrypt from 'bcrypt';
+
+
 
 dotenv.config();
 
-export const resetPassword = async (req, res) => {
+export const changePassword = async (req, res) => {
   const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
-  const { password, otp } = req.body;
+  const { old_password, new_password } = req.body;
+  const { user_id } = req.user;
   try {
-    const existingOtp = await OtpsSchema.findOne({
-      otp: otp,
-    });
+    const isExisting = await UserSchema.findById(user_id, { password: 1 });
 
-    if (!existingOtp) {
+    if (!isExisting) {
       return res.json({
         success: false,
         status: UNAUTHROIZED,
-        message: 'Invalid Code',
+        message: 'User does not exist',
       });
     }
 
-    if (existingOtp.status === 'expired')
-      return res.json({
-        success: false,
-        status: UNAUTHROIZED,
-        message: 'Code Expired',
-      });
-
-    if (
-      (new Date().valueOf() - existingOtp.otp_expiration_timestamp.valueOf()) /
-        1000 /
-        60 /
-        60 >
-      1
-    ) {
-      return res.json({
-        success: false,
-        status: UNAUTHROIZED,
-        message: 'Code Expired',
-      });
-    }
-
-    await OtpsSchema.updateOne(
-      {
-        otp: otp,
-      },
-      { $set: { status: 'expired' } },
+    const passValidation = await bcrypt.compare(
+      old_password,
+      isExisting.password,
     );
 
+    if (!passValidation) {
+      return res.json({
+        success: false,
+        status: UNAUTHROIZED,
+        message: 'Wrong Credentials',
+      });
+    }
+
     const passHash = await bcrypt.hash(
-      password,
+      new_password,
       parseInt(process.env.SALT_ROUNDS, 10),
     );
 
     await UserSchema.updateOne(
       {
-        _id: new mongoose.Types.ObjectId(existingOtp.user_id),
+        _id: new mongoose.Types.ObjectId(isExisting._id),
       },
       { $set: { password: passHash } },
     );

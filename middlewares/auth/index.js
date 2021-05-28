@@ -13,14 +13,14 @@ export const auth = async (req, res, next) => {
     !req.headers.authorization ||
     !req.headers.authorization.toLowerCase().includes('bearer')
   )
-    res.status(UNAUTHROIZED).send('Access Denied! No Token Provided');
+    return res.status(UNAUTHROIZED).send('Access Denied! No Token Provided');
 
   try {
     const accessToken = req.headers.authorization.split(' ')[1];
     const { payload: payLoad } = jwt.decode(accessToken, { complete: true });
 
     if (new Date(payLoad.exp * 1000) < new Date(Date.now())) {
-      res.json({
+      return res.json({
         success: true,
         status: PRE_CONDITION_FAILED,
         message: 'Token Expired',
@@ -40,9 +40,10 @@ export const auth = async (req, res, next) => {
       });
     }
 
+    req.user = payLoad.user;
     next();
   } catch (e) {
     logger('error', 'Error:', e.message);
-    res.status(BAD_REQUEST).send('Invalid Token');
+    return res.status(BAD_REQUEST).send('Invalid Token ?');
   }
 };

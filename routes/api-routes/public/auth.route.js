@@ -14,11 +14,13 @@ router.post(
       {
         email: req.body.email,
         password: req.body.password,
+        confirm_password: req.body.confirm_password,
       },
       {
         email: 'required|string|email',
         password:
           'required|string|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
+        confirm_password: 'required|same:password',
       },
       {
         'regex.password': `Password should have:
@@ -88,25 +90,6 @@ router.patch(
   auth.sendCodePasswordRecovery,
 );
 
-router.patch(
-  '/verify-otp',
-  (req, res, next) => {
-    validation(
-      req,
-      res,
-      next,
-      {
-        otp: req.headers.otp,
-        email: req.headers.email,
-      },
-      {
-        otp: 'required|string',
-        email: 'required|email',
-      },
-    );
-  },
-  auth.confirmCodePasswordRecovery,
-);
 
 router.patch(
   '/reset-password',
@@ -116,12 +99,12 @@ router.patch(
       res,
       next,
       {
-        email: req.body.email,
+        otp: req.body.otp,
         password: req.body.password,
         confirm_password: req.body.confirm_password,
       },
       {
-        email: 'required|email',
+        otp: 'required|string',
         password:
           'required|string|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
         confirm_password: 'required|same:password',

@@ -27,7 +27,7 @@ export const sendCodePasswordRecovery = async (req, res) => {
       { $set: { status: 'expired' } },
     );
 
-    const otp = await randomBytes(20).toString('hex');
+    const otp = await randomBytes(30).toString('hex');
 
     const newOtp = new OtpsSchema({
       otp,
@@ -154,24 +154,23 @@ export const sendCodePasswordRecovery = async (req, res) => {
                                               To reset your password, click the following link and
                                               enter the following code.
                                             </p>
-                                            <p>
-                                              <a
-                                                href="javascript:void(0);"
-                                                style="
-                                                  background: #455056;
-                                                  text-decoration: none !important;
-                                                  font-weight: 500;
-                                                  margin-top: 35px;
-                                                  color: #fff;
-                                                  text-transform: uppercase;
-                                                  font-size: 14px;
-                                                  padding: 50px 24px;
-                                                  display: inline-block;
-                                                  border-radius: 10px;
-                                                "
-                                                >${otp}</a
-                                              >
-                                            </p>
+                                          
+                                            <a
+                                              href="${process.env.FRONTEND_URL}/reset-password/${otp}"
+                                              style="
+                                                background: #20e277;
+                                                text-decoration: none !important;
+                                                font-weight: 500;
+                                                margin-top: 35px;
+                                                color: #fff;
+                                                text-transform: uppercase;
+                                                font-size: 14px;
+                                                padding: 10px 24px;
+                                                display: inline-block;
+                                                border-radius: 50px;
+                                              "
+                                              >Reset Password</a
+                                            >
                                           </td>
                                         </tr>
                                         <tr>
@@ -194,8 +193,6 @@ export const sendCodePasswordRecovery = async (req, res) => {
                           <!--/100% body table-->
                         </body>
                       </html>
-
-    
     `;
 
     sendMail(
@@ -204,10 +201,12 @@ export const sendCodePasswordRecovery = async (req, res) => {
       'Password Recovery Code: **************',
       HtmlTemplate,
     );
-    
+
     return res.json({
       success: true,
-      data: otp,
+      data: {
+        message: 'Otp sent please check your email',
+      },
       status: OK,
     });
   } catch (e) {
