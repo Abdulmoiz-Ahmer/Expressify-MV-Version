@@ -5,13 +5,12 @@ import { logger } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
 
-
-
 dotenv.config();
 
 export const changePassword = async (req, res) => {
   const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
   const { old_password, new_password } = req.body;
+
   const { user_id } = req.user;
   try {
     const isExisting = await UserSchema.findById(user_id, { password: 1 });
@@ -19,8 +18,10 @@ export const changePassword = async (req, res) => {
     if (!isExisting) {
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'User does not exist',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Email does not exist',
+        },
       });
     }
 
@@ -32,8 +33,10 @@ export const changePassword = async (req, res) => {
     if (!passValidation) {
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'Wrong Credentials',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Wrong Credentials',
+        },
       });
     }
 
@@ -52,16 +55,18 @@ export const changePassword = async (req, res) => {
     return res.json({
       success: true,
       data: {
+        code: OK,
         message: 'Password Changed Successfully',
       },
-      status: OK,
     });
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({
-      status: SERVER_ERROR,
       success: false,
-      message: 'Internal Server Error',
+      error: {
+        code: SERVER_ERROR,
+        message: 'Internal Server Error',
+      },
     });
   }
 };

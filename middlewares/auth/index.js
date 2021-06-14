@@ -13,7 +13,13 @@ export const auth = async (req, res, next) => {
     !req.headers.authorization ||
     !req.headers.authorization.toLowerCase().includes('bearer')
   )
-    return res.status(UNAUTHROIZED).send('Access Denied! No Token Provided');
+    return res.json({
+      success: false,
+      error: {
+        code: UNAUTHROIZED,
+        message: 'Access Denied! No Token Provided',
+      },
+    });
 
   try {
     const accessToken = req.headers.authorization.split(' ')[1];
@@ -21,9 +27,11 @@ export const auth = async (req, res, next) => {
 
     if (new Date(payLoad.exp * 1000) < new Date(Date.now())) {
       return res.json({
-        success: true,
-        status: PRE_CONDITION_FAILED,
-        message: 'Token Expired',
+        success: false,
+        error: {
+          code: PRE_CONDITION_FAILED,
+          message: 'Token Expired',
+        },
       });
     }
 
@@ -34,9 +42,11 @@ export const auth = async (req, res, next) => {
 
     if (!inDataBase || !inDataBase._id) {
       return res.json({
-        success: true,
-        status: FORBIDDEN,
-        message: 'Invalid Token',
+        success: false,
+        error: {
+          code: FORBIDDEN,
+          message: 'Invalid Token',
+        },
       });
     }
 
@@ -44,6 +54,12 @@ export const auth = async (req, res, next) => {
     next();
   } catch (e) {
     logger('error', 'Error:', e.message);
-    return res.status(BAD_REQUEST).send('Invalid Token ?');
+    return res.json({
+      success: false,
+      error: {
+        code: BAD_REQUEST,
+        message: 'Invalid Token',
+      },
+    });
   }
 };

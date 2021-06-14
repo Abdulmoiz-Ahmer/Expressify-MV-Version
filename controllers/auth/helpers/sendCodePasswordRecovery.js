@@ -17,8 +17,10 @@ export const sendCodePasswordRecovery = async (req, res) => {
     if (!isExisting) {
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'Email does not exist',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Email does not exist',
+        },
       });
     }
 
@@ -205,16 +207,18 @@ export const sendCodePasswordRecovery = async (req, res) => {
     return res.json({
       success: true,
       data: {
+        code: OK,
         message: 'Otp sent please check your email',
       },
-      status: OK,
     });
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({
-      status: SERVER_ERROR,
       success: false,
-      message: 'Internal Server Error',
+      error: {
+        code: SERVER_ERROR,
+        message: 'Internal Server Error',
+      },
     });
   }
 };

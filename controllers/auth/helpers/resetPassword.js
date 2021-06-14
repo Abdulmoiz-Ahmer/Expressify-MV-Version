@@ -19,16 +19,20 @@ export const resetPassword = async (req, res) => {
     if (!existingOtp) {
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'Invalid Code',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Invalid Code',
+        },
       });
     }
 
     if (existingOtp.status === 'expired')
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'Code Expired',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Code Expired',
+        },
       });
 
     if (
@@ -40,8 +44,10 @@ export const resetPassword = async (req, res) => {
     ) {
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'Code Expired',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Code Expired',
+        },
       });
     }
 
@@ -67,16 +73,18 @@ export const resetPassword = async (req, res) => {
     return res.json({
       success: true,
       data: {
+        code: OK,
         message: 'Password Changed Successfully',
       },
-      status: OK,
     });
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({
-      status: SERVER_ERROR,
       success: false,
-      message: 'Internal Server Error',
+      error: {
+        code: SERVER_ERROR,
+        message: 'Internal Server Error',
+      },
     });
   }
 };

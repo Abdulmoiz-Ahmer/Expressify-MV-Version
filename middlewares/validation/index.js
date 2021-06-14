@@ -10,8 +10,12 @@ export const validate = (req, res, next, data, rules, msg = {}) => {
   const validation = new Validator(data, rules, msg);
   if (validation.fails()) {
     res.send({
-      status: UNPROCESSABLE_ENTITY,
-      message: validation.errors.errors,
+      status: false,
+      error: {
+        code: UNPROCESSABLE_ENTITY,
+        message: 'Input Error',
+        details: validation.errors.errors,
+      },
     });
   } else {
     next();

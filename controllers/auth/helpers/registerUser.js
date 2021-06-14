@@ -13,9 +13,11 @@ export const registerUser = async (req, res) => {
 
     if (isExisting) {
       return res.json({
-        success: true,
-        message: 'This email is already associated with an account',
-        status: CONFLICT,
+        success: false,
+        error: {
+          code: CONFLICT,
+          message: 'This email is already associated with an account',
+        },
       });
     }
 
@@ -82,19 +84,21 @@ export const registerUser = async (req, res) => {
     return res.json({
       success: true,
       data: {
+        code: OK,
         access_token_expiration_timestamp,
         refresh_token_expiration_timestamp,
         access_token,
         refresh_token,
       },
-      status: OK,
     });
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({
-      status: SERVER_ERROR,
       success: false,
-      message: 'Internal Server Error',
+      error: {
+        code: SERVER_ERROR,
+        message: 'Internal Server Error',
+      },
     });
   }
 };

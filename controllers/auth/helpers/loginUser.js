@@ -20,8 +20,10 @@ export const loginUser = async (req, res) => {
     if (!isExisting) {
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'Wrong Credentials',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Wrong Credentials',
+        },
       });
     }
 
@@ -30,8 +32,10 @@ export const loginUser = async (req, res) => {
     if (!passValidation) {
       return res.json({
         success: false,
-        status: UNAUTHROIZED,
-        message: 'Wrong Credentials',
+        error: {
+          code: UNAUTHROIZED,
+          message: 'Wrong Credentials',
+        },
       });
     }
 
@@ -91,20 +95,22 @@ export const loginUser = async (req, res) => {
     return res.json({
       success: true,
       data: {
+        code: OK,
         access_token_expiration_timestamp,
         refresh_token_expiration_timestamp,
         access_token,
         refresh_token,
         remember_me,
       },
-      status: OK,
     });
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({
-      status: SERVER_ERROR,
       success: false,
-      message: 'Internal Server Error',
+      error: {
+        code: SERVER_ERROR,
+        message: 'Internal Server Error',
+      },
     });
   }
 };
