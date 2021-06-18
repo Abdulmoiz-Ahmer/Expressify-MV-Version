@@ -1,7 +1,9 @@
 # Expressify
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 `Expressify` is an express boilerplate for building rest api's.
@@ -27,12 +29,14 @@ JWT_SECRET=
 SENDER_EMAIL=sender email
 SENDGRID_API_KEY=Twilio SendGrid Key
 ```
+
 Install nodemodules and start server.
 
 ```
 yarn install
 yarn server
 ```
+
 or
 
 ```
@@ -40,10 +44,23 @@ npm install
 npm run server
 ```
 
+##Usage
+
+BaseUrl=localhost:4000/api/v1
+
+    ###POST  /auth/register
+    ```
+    Body {
+        "email":"email",
+        "password":"Password"
+    }
+    ```
+
+
+
 ## License
 
 [MIT](https://opensource.org/licenses/mit-license.html)
-
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
