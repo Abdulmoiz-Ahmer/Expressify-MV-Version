@@ -3,6 +3,9 @@ import { profile } from '~/controllers';
 import { validate as validation } from '~/middlewares';
 
 const router = express.Router();
+
+//Patch route to password change
+//Validation middleware will validate old_password,new_password,confirm_password field before proceeding further
 router.patch(
   '/change-password',
   (req, res, next) => {

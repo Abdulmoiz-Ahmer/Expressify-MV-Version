@@ -9,9 +9,14 @@ import { sendMail } from '~/utils';
 
 dotenv.config();
 export const sendCodePasswordRecovery = async (req, res) => {
+  //Codes that we might return coming from status
   const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
+
+  //Destructuring email from headers
   const { email } = req.headers;
+
   try {
+    //Making sure that the user exists
     const isExisting = await UserSchema.findOne({ email }, { _id: 1 });
 
     if (!isExisting) {
@@ -24,21 +29,24 @@ export const sendCodePasswordRecovery = async (req, res) => {
       });
     }
 
+    //Expiring all the previously sent otps of the same user
     await OtpsSchema.updateMany(
       { status: 'sent', user_id: new mongoose.Types.ObjectId(isExisting._id) },
       { $set: { status: 'expired' } },
     );
 
+    //Generating the new otp
     const otp = await randomBytes(30).toString('hex');
 
+    //Saving new otp in the OtpsSchema
     const newOtp = new OtpsSchema({
       otp,
       otp_expiration_timestamp: Date.now() + 3600000,
       user_id: isExisting._id,
     });
-
     await newOtp.save();
 
+    //Creating html template to sent in email
     const HtmlTemplate = `
                           <!DOCTYPE html>
                       <html lang="en-US">
@@ -197,6 +205,7 @@ export const sendCodePasswordRecovery = async (req, res) => {
                       </html>
     `;
 
+    //Invoking the email sent method
     sendMail(
       email,
       'Password Recovery',
@@ -204,6 +213,7 @@ export const sendCodePasswordRecovery = async (req, res) => {
       HtmlTemplate,
     );
 
+    //Sending response in case everything went well!
     return res.json({
       success: true,
       data: {
@@ -212,6 +222,7 @@ export const sendCodePasswordRecovery = async (req, res) => {
       },
     });
   } catch (e) {
+    //Log in case of any abnormal crash
     logger('error', 'Error:', e.message);
     return res.json({
       success: false,

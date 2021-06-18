@@ -4,6 +4,10 @@ import { validate as validation } from '~/middlewares';
 
 const router = express.Router();
 
+//Declared routes that does crud on authentication
+
+//Post route to register user
+//Validation middleware will validate email, password, confirm_password fields before proceeding further
 router.post(
   '/register',
   (req, res, next) => {
@@ -34,6 +38,8 @@ router.post(
   auth.registerUser,
 );
 
+//Post route to login user
+//Validation middleware will validate email, password fields before proceeding further
 router.post(
   '/login',
   (req, res, next) => {
@@ -54,6 +60,8 @@ router.post(
   auth.loginUser,
 );
 
+//Put route to refresh token
+//Validation middleware will validate email, password fields before proceeding further
 router.put(
   '/refresh-session',
   (req, res, next) => {
@@ -72,6 +80,8 @@ router.put(
   auth.refreshSession,
 );
 
+//Patch route to password recovery
+//Validation middleware will validate email field before proceeding further
 router.patch(
   '/forgot-password',
   (req, res, next) => {
@@ -83,14 +93,15 @@ router.patch(
         email: req.headers.email,
       },
       {
-        email: 'required|email',
+        email: 'required|string|email',
       },
     );
   },
   auth.sendCodePasswordRecovery,
 );
 
-
+//Patch route to password recovery
+//Validation middleware will validate otp,password,confirm_password field before proceeding further
 router.patch(
   '/reset-password',
   (req, res, next) => {
