@@ -44,73 +44,75 @@ npm install
 npm run server
 ```
 
-##Usage
+## Usage
 
+```
 BaseUrl=localhost:4000/api/v1
+```
 
-    ```
-    POST  /auth/register
-    Body {
-        "email":"email",
-        "password":"Password"
-        "confirm_password":"Password"
-    }
-    ```
+```
+POST  /auth/register
+Body {
+    "email":"email",
+    "password":"Password"
+    "confirm_password":"Password"
+}
+```
 
-    ```
-    POST  /auth/login
-    Body {
-    "email": "email",
-    "password": "Password",
-    "remember_me": false
-    }
-    ```
+```
+POST  /auth/login
+Body {
+"email": "email",
+"password": "Password",
+"remember_me": false
+}
+```
 
-    ```
-    PUT  /auth/refresh-session
-    Headers {
-        refresh_token:<token>
-    }
-    ```
+```
+PUT  /auth/refresh-session
+Headers {
+    refresh_token:<token>
+}
+```
 
-    ```
-    PATCH  /auth/forgot-password
-    Headers {
-        email:<email>
-    }
-    ```
+```
+PATCH  /auth/forgot-password
+Headers {
+    email:<email>
+}
+```
 
-    ```
-    PATCH  /auth/reset-password
-     Body {
-        "otp":"otp code",
-        "password":"Password",
-        "confirm_password":"Password"
-     }
-    ```
+```
+PATCH  /auth/reset-password
+ Body {
+    "otp":"otp code",
+    "password":"Password",
+    "confirm_password":"Password"
+ }
+```
 
-    ```
-    GET  /test
-    ```
+```
+GET  /test
+```
 
-    ```
-    PATCH  /profile-settings/change-password
+```
+PATCH  /profile-settings/change-password
      Headers {
         authorization:bearer <token>
      }
-     Body {
-        "old_password":"Password",
-        "new_password":"Password",
-        "confirm_password":"Password"
-     }
-    ```
+ Body {
+    "old_password":"Password",
+    "new_password":"Password",
+    "confirm_password":"Password"
+ }
+```
 
-    ```
-    GET  /authTest
-     Headers {
-        authorization:bearer <token>
-     }
-    ```
+```
+GET  /authTest
+ Headers {
+    authorization:bearer <token>
+ }
+```
 
 ## License
 
