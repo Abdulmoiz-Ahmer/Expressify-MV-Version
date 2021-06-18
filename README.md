@@ -46,8 +46,9 @@ npm run server
 
 ##Usage
 
-BaseUrl=localhost:4000/api/v1
-##POST  /auth/register
+    BaseUrl=localhost:4000/api/v1
+    
+## POST  /auth/register
     ```
     Body {
         "email":"email",
