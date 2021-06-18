@@ -6,7 +6,7 @@
 
 `Expressify` is an express boilerplate for building rest api's.
 
-- Register, Login and Password Recovery calls are already a part of the boilerplate.
+- Register, Login and Password Recovery, Password Change calls are already a part of the boilerplate.
 - You can build api calls on top of it.
 - The boilerplate follows a rough mvc kind of structure.
 
