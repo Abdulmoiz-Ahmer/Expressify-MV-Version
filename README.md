@@ -48,8 +48,9 @@ npm run server
 
 BaseUrl=localhost:4000/api/v1
 
-    ###POST  /auth/register
-    ```
+   EndPoint :POST  /auth/register
+   
+   ```
     Body {
         "email":"email",
         "password":"Password"
