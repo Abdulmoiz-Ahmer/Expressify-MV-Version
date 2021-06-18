@@ -11,7 +11,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'import/named': 'warn',
     'no-unused-vars': 'warn',
-    'import/prefer-default-export': 'warn',
+    'import/prefer-default-export': 'none',
   },
   plugins: ['prettier'],
   settings: {
