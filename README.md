@@ -44,11 +44,11 @@ npm install
 npm run server
 ```
 
-##Usage
+## Usage
 
     BaseUrl=localhost:4000/api/v1
     
-## POST  /auth/register
+   ## POST  /auth/register
     ```
     Body {
         "email":"email",
