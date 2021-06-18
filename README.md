@@ -47,16 +47,13 @@ npm run server
 ##Usage
 
 BaseUrl=localhost:4000/api/v1
-
-   EndPoint :POST  /auth/register
-   
-   ```
+##POST  /auth/register
+    ```
     Body {
         "email":"email",
         "password":"Password"
     }
     ```
-
 
 
 ## License
