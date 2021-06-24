@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
+http.createServer(app);
 app.listen(port, () => {
   logger('info', 'Info:', `Listening on port: ${port}`);
 });
