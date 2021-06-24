@@ -15,7 +15,6 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-const server = http.createServer(app);
-server.listen(port, () => {
+app.listen(port, () => {
   logger('info', 'Info:', `Listening on port: ${port}`);
 });

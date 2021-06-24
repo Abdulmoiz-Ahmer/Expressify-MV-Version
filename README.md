@@ -51,8 +51,9 @@ BaseUrl=localhost:4000/api/v1
 ```
 
 ```
-POST  /auth/register
-Body {
+METHOD: POST  
+PATH: /auth/register
+REQUEST: Body {
     "email":"email",
     "password":"Password"
     "confirm_password":"Password"
@@ -60,8 +61,9 @@ Body {
 ```
 
 ```
-POST  /auth/login
-Body {
+METHOD: POST 
+PATH: /auth/login
+REQUEST: Body {
 "email": "email",
 "password": "Password",
 "remember_me": false
@@ -69,22 +71,25 @@ Body {
 ```
 
 ```
-PUT  /auth/refresh-session
-Headers {
+METHOD: PUT 
+PATH: /auth/refresh-session
+REQUEST: Headers {
     refresh_token:<token>
 }
 ```
 
 ```
-PATCH  /auth/forgot-password
-Headers {
+METHOD: PATCH  
+PATH: /auth/forgot-password
+REQUEST: Headers {
     email:<email>
 }
 ```
 
 ```
-PATCH  /auth/reset-password
- Body {
+METHOD: PATCH  
+PATH: /auth/reset-password
+REQUEST: Body {
     "otp":"otp code",
     "password":"Password",
     "confirm_password":"Password"
@@ -92,15 +97,17 @@ PATCH  /auth/reset-password
 ```
 
 ```
-GET  /test
+METHOD: GET  
+PATH: /test
 ```
 
 ```
-PATCH  /profile-settings/change-password
+METHOD: PATCH  
+PATH: /profile-settings/change-password
      Headers {
         authorization:bearer <token>
      }
- Body {
+REQUEST: Body {
     "old_password":"Password",
     "new_password":"Password",
     "confirm_password":"Password"
@@ -108,8 +115,9 @@ PATCH  /profile-settings/change-password
 ```
 
 ```
-GET  /authTest
- Headers {
+METHOD: GET  
+PATH: /authTest
+REQUEST: Headers {
     authorization:bearer <token>
  }
 ```
