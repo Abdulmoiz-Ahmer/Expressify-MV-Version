@@ -26,10 +26,11 @@ cd express-boiler-plate-with-mongo-configuration
 Add the values to the variables in .Env:
 
 ```
-CONNECTION_STRING=MongoDB string
-JWT_SECRET=
-SENDER_EMAIL=sender email
-SENDGRID_API_KEY=Twilio SendGrid Key
+CONNECTION_STRING=<MongoDB Connection String>
+API_KEY=<Secret Key>
+JWT_SECRET=<Secret For JSON Web Tokens>
+SENDER_EMAIL=<sender email>
+SENDGRID_API_KEY=<Twilio SendGrid Key>
 ```
 
 Install nodemodules and start server.
@@ -53,100 +54,103 @@ BaseUrl=localhost:4000/api/v1
 ```
 
 ```
-
 METHOD: POST
 PATH: /auth/register
+REQUEST: Headers {
+    x-api-key:<api-key>
+}
 REQUEST: Body {
     "email":"email",
     "password":"Password"
     "confirm_password":"Password"
 }
-INVOKE: curl -X POST -H "Content-Type: application/json" -d '{"email":"<insert-email-here>","password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/register
-
+INVOKE: curl -X POST -H "Content-Type: application/json" -H 'x-api-key:<insert-api-key-here>' -d '{"email":"<insert-email-here>","password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/register
 ```
 
 ```
-
 METHOD: POST
 PATH: /auth/login
+REQUEST: Headers {
+    x-api-key:<api-key>
+}
 REQUEST: Body {
 "email": "email",
 "password": "Password",
 "remember_me": false //optional
 }
-INVOKE: curl -X POST -H "Content-Type: application/json" -d '{"email":"<insert-email-here>","password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/login
-
+INVOKE: curl -X POST -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -d '{"email":"<insert-email-here>","password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/login
 ```
 
 ```
-
 METHOD: PUT
 PATH: /auth/refresh-session
 REQUEST: Headers {
     refresh_token:<refresh-token>
+    x-api-key:<api-key>
 }
-INVOKE: curl -X PUT -H "refresh_token:<refresh-token-here>"  http://localhost:4000/api/v1/auth/refresh-session
-
+INVOKE: curl -X PUT -H "refresh_token:<refresh-token-here>"  -H 'x-api-key:<insert-api-key-here>'  http://localhost:4000/api/v1/auth/refresh-session
 ```
 
 ```
-
 METHOD: PATCH
 PATH: /auth/forgot-password
 REQUEST: Headers {
     email:<email>
+    x-api-key:<api-key>
 }
 
-INVOKE: curl -X PATCH -H "email:<insert-email-here>" http://localhost:4000/api/v1/auth/forgot-password
+INVOKE: curl -X PATCH -H "email:<insert-email-here>"  -H 'x-api-key:<insert-api-key-here>' http://localhost:4000/api/v1/auth/forgot-password
 
 ```
 
 ```
-
 METHOD: PATCH
 PATH: /auth/reset-password
+REQUEST: Headers {
+    x-api-key:<api-key>
+}
 REQUEST: Body {
     "otp":"otp code",
     "password":"Password",
     "confirm_password":"Password"
- }
-INVOKE: curl -X PATCH -H "Content-Type: application/json" -d '{"otp":"<otp-code-here>","password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/reset-password
-
+}
+INVOKE: curl -X PATCH -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -d '{"otp":"<otp-code-here>","password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/reset-password
 ```
 
 ```
-
 METHOD: GET
 PATH: /test
-INVOKE: curl  http://localhost:4000/api/v1/test
-
+REQUEST: Headers {
+    api_key:<api_key>
+    refresh_token:<refresh-token>
+}
+INVOKE: curl -H 'x-api-key:<api-key-here>' http://localhost:4000/api/v1/test
 ```
 
 ```
 METHOD: PATCH
 PATH: /profile-settings/change-password
-     Headers {
+REQUEST: Headers {
         authorization:bearer <access-token>
-     }
+        x-api-key:<api-key>
+}
 REQUEST: Body {
     "old_password":"Password",
     "new_password":"Password",
     "confirm_password":"Password"
- }
+}
 
- INVOKE: curl -X PATCH  -H "Content-Type: application/json" -H "authorization:bearer <insert-access-token-here>" -d '{"old_password":"<insert-password-here>","new_password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/profile-settings/change-password
-
+ INVOKE: curl -X PATCH  -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -H "authorization:bearer <insert-access-token-here>"  -d '{"old_password":"<insert-password-here>","new_password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/profile-settings/change-password
 ```
 
 ```
-
 METHOD: GET
 PATH: /authTest
 REQUEST: Headers {
     authorization:bearer <token>
- }
-INVOKE: curl -X GET -H "authorization:bearer <<insert-access-token-here>"  http://localhost:4000/api/v1/authTest
-
+    x-api-key:<api-key>
+}
+INVOKE: curl -X GET  -H 'x-api-key:<insert-api-key-here>' -H "authorization:bearer <insert-access-token-here>"  http://localhost:4000/api/v1/authTest
 ```
 
 ## License
