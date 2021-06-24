@@ -5,6 +5,7 @@ import cors from 'cors';
 import { connection } from '~/config';
 import { logger } from '~/utils';
 import routes from '~/routes';
+import { auth } from 'middlewares/auth';
 
 dotenv.config();
 
