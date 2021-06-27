@@ -32,6 +32,9 @@ API_KEY=<Secret Key>
 JWT_SECRET=<Secret For JSON Web Tokens>
 SENDER_EMAIL=<sender email>
 SENDGRID_API_KEY=<Twilio SendGrid Key>
+
+//Optional It is only use in one route if you want to use that route than Front end ui screen to reset password after code is sent to email will be required.
+FRONTEND_URL=
 ```
 
 Install nodemodules and start server.
