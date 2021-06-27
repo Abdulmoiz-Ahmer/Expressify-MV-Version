@@ -15,6 +15,8 @@
 - Register, Login and Password Recovery, Password Change calls are already a part of the boilerplate.
 - Swagger UI with JS Doc is also part of the boilerplate. You can access the api's through ui using route (/api-docs).
 
+![Screenshot from 2021-06-19 05-06-28](https://user-images.githubusercontent.com/43717814/123559801-ba543580-d7b7-11eb-9236-f4a8b205260a.png)
+
 ## Setup
 
 Install the Repository:
