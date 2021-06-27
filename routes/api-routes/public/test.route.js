@@ -8,7 +8,8 @@ const router = express.Router();
  * /test:
  *   get:
  *     summary: Test call to test api.
- *     description: Testing an API.
+ *     tags:
+ *      - Public Routes
  *     responses:
  *       200:
  *         description: working.

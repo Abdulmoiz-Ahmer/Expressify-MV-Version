@@ -11,6 +11,8 @@ const router = express.Router();
  * /profile-settings/change-password:
  *   patch:
  *     summary: Api call for the logged in user to change password.
+ *     tags:
+ *      - Authenticated Routes
  *     requestBody:
  *       required: true
  *       content:

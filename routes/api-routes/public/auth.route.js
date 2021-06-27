@@ -13,6 +13,8 @@ const router = express.Router();
  * /auth/register:
  *   post:
  *     summary: Api call for registration of the user.
+ *     tags:
+ *      - Public Routes
  *     requestBody:
  *       required: true
  *       content:
@@ -106,6 +108,8 @@ router.post(
  * /auth/login:
  *   post:
  *     summary: Api call for the user to logged in to the application.
+ *     tags:
+ *      - Public Routes
  *     requestBody:
  *       required: true
  *       content:
@@ -193,6 +197,8 @@ router.post(
  * /auth/refresh-session:
  *   put:
  *     summary: Api call for the user to renew the access token.
+ *     tags:
+ *      - Public Routes
  *     parameters:
  *       - in: header
  *         name: refresh_token
@@ -266,6 +272,8 @@ router.put(
  * /auth/forgot-password:
  *   patch:
  *     summary: Api call of the password recovery request(sent email).
+ *     tags:
+ *      - Public Routes
  *     parameters:
  *       - in: header
  *         name: email
@@ -322,6 +330,8 @@ router.patch(
  * /auth/reset-password:
  *   patch:
  *     summary: Api call to reset password using the code sent via email through /forgot-password request.
+ *     tags:
+ *      - Public Routes
  *     requestBody:
  *       required: true
  *       content:

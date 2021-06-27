@@ -9,6 +9,8 @@ const router = express.Router();
  * /authTest:
  *   get:
  *     summary: Test call to test authentication.
+ *     tags:
+ *      - Authenticated Routes
  *     responses:
  *       200:
  *         description: working.
