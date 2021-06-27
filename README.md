@@ -163,4 +163,4 @@ INVOKE: curl -X GET  -H 'x-api-key:<insert-api-key-here>' -H "authorization:bear
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
