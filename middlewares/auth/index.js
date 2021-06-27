@@ -24,7 +24,6 @@ export const auth = async (req, res, next) => {
     });
 
   try {
-
     //Splitting authorization based on space to get token
     const accessToken = req.headers.authorization.split(' ')[1];
 

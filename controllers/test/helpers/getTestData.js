@@ -6,8 +6,10 @@ export const getTestData = (_, res) => {
   try {
     return res.json({
       success: true,
-      data: 'working',
-      status: OK,
+      data: {
+        code: OK,
+        message: 'Working',
+      },
     });
   } catch (e) {
     logger('error', 'Error:', e.message);

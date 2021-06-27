@@ -6,21 +6,19 @@ import authenticatedRoutes from './api-routes/authenticated';
 import { authorize } from '../middlewares/authorize';
 
 const router = express.Router();
-//Prefix
-const prefix = '/api';
 
 //API version
-const v1 = `${prefix}/v1`;
+const version = `/${process.env.BASE_URL}/${process.env.VERSION}`;
 
 //Registering the routes with the router (Public Routes)
 publicRoutes.forEach((route) => {
-  router.use(v1 + route.path, authorize, route.route);
+  router.use(version + route.path, authorize, route.route);
 });
 
 //Registering the routes with the router (Private Routes)
 //Auth Middleware Attached
 authenticatedRoutes.forEach((route) => {
-  router.use(v1 + route.path, authorize, auth, route.route);
+  router.use(version + route.path, authorize, auth, route.route);
 });
 
 module.exports = router;
