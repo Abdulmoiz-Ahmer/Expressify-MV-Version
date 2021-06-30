@@ -218,6 +218,7 @@ export const sendCodePasswordRecovery = async (req, res) => {
       success: true,
       data: {
         code: OK,
+        otp,
         message: 'Otp sent please check your email',
       },
     });

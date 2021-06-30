@@ -4,9 +4,14 @@ import { logger } from '~/utils';
 
 dotenv.config();
 
+const Connection_String =
+  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing'
+    ? process.env.CONNECTION_STRING_TESTING
+    : process.env.CONNECTION_STRING_PRODUCTION;
+
 //Mongoose connection
 mongoose
-  .connect(process.env.CONNECTION_STRING, {
+  .connect(Connection_String, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

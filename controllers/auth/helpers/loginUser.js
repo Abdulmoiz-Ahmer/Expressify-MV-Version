@@ -14,15 +14,15 @@ export const loginUser = async (req, res) => {
 
   //Destructuring email, remember_me & password from body
   const { email, password } = req.body;
+
   let { remember_me } = req.body;
 
   try {
     //Making sure that the user exists
     const isExisting = await UserSchema.findOne(
       { email },
-      { _id: 1, password },
+      { _id: 1, password: 1 },
     );
-
     if (!isExisting) {
       return res.json({
         success: false,

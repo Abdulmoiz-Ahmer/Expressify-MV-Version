@@ -198,7 +198,7 @@ router.post(
  *   put:
  *     summary: Api call for the user to renew the access token.
  *     tags:
- *      - Public Routes
+ *       - Authenticated Routes
  *     parameters:
  *       - in: header
  *         name: refresh_token

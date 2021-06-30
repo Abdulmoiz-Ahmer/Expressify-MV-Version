@@ -24,13 +24,16 @@ const router = express.Router();
  *                   description: Either True or False.
  *                   example: true
  *                 data:
- *                   type: string
- *                   description: working.
- *                   example: working
- *                 status:
- *                   type: integer
- *                   description: code in case everything went well.
- *                   example: 200
+ *                   type: object
+ *                   properties:
+ *                     code:
+ *                       type: integer
+ *                       description: One of the http response codes.
+ *                       example: 200
+ *                     message:
+ *                       type: string
+ *                       description: working.
+ *                       example: Working
  *
  */
 router.get('/', test.getTestData);

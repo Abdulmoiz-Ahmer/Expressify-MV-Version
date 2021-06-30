@@ -14,7 +14,10 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-if (process.env.NODE_ENV === 'development') {
+if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'testing'
+) {
   const options = require('~/config/swagger').swagger,
     swaggerJsdoc = require('swagger-jsdoc'),
     swaggerUi = require('swagger-ui-express');
@@ -30,3 +33,5 @@ http.createServer(app);
 app.listen(port, () => {
   logger('info', 'Info:', `Listening on port: ${port}`);
 });
+
+module.exports = app;
