@@ -14,6 +14,7 @@
 - Path Aliasing is also a part of the boilerplate.
 - Register, Login and Password Recovery, Password Change calls are already a part of the boilerplate.
 - Swagger UI with JS Doc is also part of the boilerplate. You can access the api's through ui using route (/api-docs).
+- Test Cases using mocha, chai and chaihttp are also part of the boilerplate.
 
 
 ## Swagger Route Showing Availble Api's
