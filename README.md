@@ -15,6 +15,11 @@
 - Register, Login and Password Recovery, Password Change calls are already a part of the boilerplate.
 - Swagger UI with JS Doc is also part of the boilerplate. You can access the api's through ui using route (/api-docs).
 
+
+## Swagger Route Showing Availble Api's
+![swaggerui](https://user-images.githubusercontent.com/43717814/123559836-f25b7880-d7b7-11eb-80f0-c2b3b25f4cfd.png)
+
+
 ## Setup
 
 Install the Repository:
@@ -32,6 +37,9 @@ API_KEY=<Secret Key>
 JWT_SECRET=<Secret For JSON Web Tokens>
 SENDER_EMAIL=<sender email>
 SENDGRID_API_KEY=<Twilio SendGrid Key>
+
+//Optional It is only use in one route if you want to use that route than Front end ui screen to reset password after code is sent to email will be required.
+FRONTEND_URL=
 ```
 
 Install nodemodules and start server.
@@ -160,4 +168,4 @@ INVOKE: curl -X GET  -H 'x-api-key:<insert-api-key-here>' -H "authorization:bear
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
