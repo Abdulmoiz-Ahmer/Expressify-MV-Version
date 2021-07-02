@@ -33,7 +33,8 @@ cd express-boiler-plate-with-mongo-configuration
 Add the values to the variables in .Env:
 
 ```
-CONNECTION_STRING=<MongoDB Connection String>
+CONNECTION_STRING_TESTING=<MongoDB Connection String For Testing/Development>
+CONNECTION_STRING_PRODUCTION=<MongoDB Connection String For Production>
 API_KEY=<Secret Key>
 JWT_SECRET=<Secret For JSON Web Tokens>
 SENDER_EMAIL=<sender email>
