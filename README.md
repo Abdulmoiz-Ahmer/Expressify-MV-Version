@@ -6,7 +6,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-`Expressify` is an express mvc like boilerplate for building rest api's.
+`Expressify` is an express mvc like boilerplate for building rest api's with mongodb.
 
 - The boilerplate follows a rough mvc kind of structure.
 - Linting and formatting are already a part of the boilerplate.
