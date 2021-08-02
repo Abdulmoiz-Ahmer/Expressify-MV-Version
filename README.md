@@ -26,8 +26,8 @@
 Install the Repository:
 
 ```
-git clone https://github.com/Abdulmoiz-Ahmer/express-boiler-plate-with-mongo-configuration.git
-cd express-boiler-plate-with-mongo-configuration
+git clone https://github.com/Abdulmoiz-Ahmer/Expressify-Mongo-Version.git
+cd Expressify-Mongo-Version
 ```
 
 Add the values to the variables in .Env:
