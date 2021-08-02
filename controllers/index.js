@@ -1,4 +1,4 @@
-//Exporting all the controllers
+// Exporting all the controllers
 
 export * from './test';
 export * from './auth';

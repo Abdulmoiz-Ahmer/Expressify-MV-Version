@@ -1,53 +1,50 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { logger } from '~/utils';
+import { randomBytes } from 'crypto';
+import { logger, sendMail, sendMessage, sendError, sendSuccess } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
 import { OtpsSchema } from '~/schemas/Otps';
-import { randomBytes } from 'crypto';
-import { sendMail } from '~/utils';
 
 dotenv.config();
-export const sendCodePasswordRecovery = async (req, res) => {
-  //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
+export const sendCodePasswordRecovery = async (request, response) => {
+	//  Codes that we might return coming from status
+	const { UNAUTHROIZED } = status;
 
-  //Destructuring email from headers
-  const { email } = req.headers;
+	//  Destructuring email from headers
+	const { email } = request.headers;
 
-  try {
-    //Making sure that the user exists
-    const isExisting = await UserSchema.findOne({ email }, { _id: 1 });
+	try {
+		//  Making sure that the user exists
+		const isExisting = await UserSchema.findOne({ email }, { _id: 1 });
 
-    if (!isExisting) {
-      return res.json({
-        success: false,
-        error: {
-          code: UNAUTHROIZED,
-          message: 'Email does not exist',
-        },
-      });
-    }
+		if (!isExisting)
+			return sendMessage('Email does not exist', response, UNAUTHROIZED);
 
-    //Expiring all the previously sent otps of the same user
-    await OtpsSchema.updateMany(
-      { status: 'sent', user_id: new mongoose.Types.ObjectId(isExisting._id) },
-      { $set: { status: 'expired' } },
-    );
+		//  Expiring all the previously sent otps of the same user
+		await OtpsSchema.updateMany(
+			{
+				status: 'sent',
+				// eslint-disable-next-line no-underscore-dangle
+				user_id: new mongoose.Types.ObjectId(isExisting._id),
+			},
+			{ $set: { status: 'expired' } },
+		);
 
-    //Generating the new otp
-    const otp = await randomBytes(30).toString('hex');
+		//  Generating the new otp
+		const otp = await randomBytes(30).toString('hex');
 
-    //Saving new otp in the OtpsSchema
-    const newOtp = new OtpsSchema({
-      otp,
-      otp_expiration_timestamp: Date.now() + 3600000,
-      user_id: isExisting._id,
-    });
-    await newOtp.save();
+		//  Saving new otp in the OtpsSchema
+		const newOtp = new OtpsSchema({
+			otp,
+			otp_expiration_timestamp: Date.now() + 3600000,
+			// eslint-disable-next-line no-underscore-dangle
+			user_id: isExisting._id,
+		});
+		await newOtp.save();
 
-    //Creating html template to sent in email
-    const HtmlTemplate = `
+		//  Creating html template to sent in email
+		const HtmlTemplate = `
                           <!DOCTYPE html>
                       <html lang="en-US">
                         <head>
@@ -205,32 +202,23 @@ export const sendCodePasswordRecovery = async (req, res) => {
                       </html>
     `;
 
-    //Invoking the email sent method
-    sendMail(
-      email,
-      'Password Recovery',
-      'Password Recovery Code: **************',
-      HtmlTemplate,
-    );
+		//  Invoking the email sent method
+		sendMail(
+			email,
+			'Password Recovery',
+			'Password Recovery Code: **************',
+			HtmlTemplate,
+		);
 
-    //Sending response in case everything went well!
-    return res.json({
-      success: true,
-      data: {
-        code: OK,
-        otp,
-        message: 'Otp sent please check your email',
-      },
-    });
-  } catch (e) {
-    //Log in case of any abnormal crash
-    logger('error', 'Error:', e.message);
-    return res.json({
-      success: false,
-      error: {
-        code: SERVER_ERROR,
-        message: 'Internal Server Error',
-      },
-    });
-  }
+		//  Sending response in case everything went well!
+
+		return sendSuccess(
+			{ otp, message: 'Otp sent please check your email' },
+			response,
+		);
+	} catch (exception) {
+		//  Log in case of any abnormal crash
+		logger('error', 'Error:', exception.message);
+		return sendError('Internal Server Error', response, exception);
+	}
 };

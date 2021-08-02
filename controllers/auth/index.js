@@ -5,9 +5,9 @@ import { sendCodePasswordRecovery } from './helpers/sendCodePasswordRecovery';
 import { resetPassword } from './helpers/resetPassword';
 
 export const auth = {
-  registerUser,
-  loginUser,
-  refreshSession,
-  sendCodePasswordRecovery,
-  resetPassword,
+	registerUser,
+	loginUser,
+	refreshSession,
+	sendCodePasswordRecovery,
+	resetPassword,
 };

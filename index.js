@@ -1,3 +1,5 @@
+/* eslint-disable import/named */
+/* eslint-disable no-unused-vars */
 import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
@@ -15,23 +17,26 @@ app.use(cors());
 app.use(routes);
 
 if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.NODE_ENV === 'testing'
+	process.env.NODE_ENV === 'development' ||
+	process.env.NODE_ENV === 'testing'
 ) {
-  const options = require('~/config/swagger').swagger,
-    swaggerJsdoc = require('swagger-jsdoc'),
-    swaggerUi = require('swagger-ui-express');
+	// eslint-disable-next-line global-require
+	const options = require('~/config/swagger').swagger;
+	// eslint-disable-next-line global-require
+	const swaggerJsdoc = require('swagger-jsdoc');
+	// eslint-disable-next-line global-require
+	const swaggerUi = require('swagger-ui-express');
 
-  app.use(
-    '/api-docs',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerJsdoc(options), { explorer: true }),
-  );
+	app.use(
+		'/api-docs',
+		swaggerUi.serve,
+		swaggerUi.setup(swaggerJsdoc(options), { explorer: true }),
+	);
 }
 
 http.createServer(app);
 app.listen(port, () => {
-  logger('info', 'Info:', `Listening on port: ${port}`);
+	logger('info', 'Info:', `Listening on port: ${port}`);
 });
 
 module.exports = app;
