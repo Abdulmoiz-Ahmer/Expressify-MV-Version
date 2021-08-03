@@ -6,6 +6,7 @@
 	"license": "MIT",
 	"scripts": {
 		"server": "nodemon --exec babel-node index.js",
+		"seed": "npx babel-node database/seeders.js",
 		"format": "prettier --write \"./**/*.js\"",
 		"lint": "eslint \"./**/*.js\"",
 		"test": "mocha --timeout 10000",
@@ -24,7 +25,8 @@
 		"uuid": "^8.3.2",
 		"validatorjs": "^3.22.1",
 		"swagger-jsdoc": "^6.1.0",
-		"swagger-ui-express": "^4.1.6"
+		"swagger-ui-express": "^4.1.6",
+		"faker": "^5.5.3"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.13.16",
@@ -42,7 +44,6 @@
 		"eslint-import-resolver-babel-module": "^5.3.1",
 		"eslint-plugin-import": "^2.22.1",
 		"eslint-plugin-prettier": "^3.4.0",
-		"faker": "^5.5.3",
 		"husky": ">=6",
 		"kill-port": "^1.6.1",
 		"lint-staged": ">=10",
