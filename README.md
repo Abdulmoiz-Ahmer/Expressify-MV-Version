@@ -15,6 +15,8 @@
 - Register, Login and Password Recovery, Password Change calls are already a part of the boilerplate.
 - Swagger UI with JS Doc is also part of the boilerplate. You can access the api's through ui using route (/api-docs).
 - Test Cases using mocha, chai and chaihttp are also part of the boilerplate.
+- Seeders are also available to run use seed command with your package manager.
+- Precommit hook is part of this boilerplate configured with linting and prettier
 
 
 ## Swagger Route Showing Availble Api's
@@ -56,6 +58,20 @@ or
 ```
 npm install
 npm run server
+```
+
+Install nodemodules and execute seeders.
+
+```
+yarn install
+yarn seed
+```
+
+or
+
+```
+npm install
+npm run seed
 ```
 
 ## Usage
