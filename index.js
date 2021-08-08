@@ -1,14 +1,11 @@
 /* eslint-disable import/named */
 /* eslint-disable no-unused-vars */
-import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
+import envLoader, { logger } from '~/utils';
 import { connection } from '~/config';
-import { logger } from '~/utils';
 import routes from '~/routes';
-
-dotenv.config();
 
 const port = process.env.PORT ?? 4000;
 const app = express();
@@ -16,10 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-if (
-	process.env.NODE_ENV === 'development' ||
-	process.env.NODE_ENV === 'testing'
-) {
+if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'staging') {
 	// eslint-disable-next-line global-require
 	const options = require('~/config/swagger').swagger;
 	// eslint-disable-next-line global-require

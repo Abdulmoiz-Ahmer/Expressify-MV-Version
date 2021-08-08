@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
@@ -6,7 +5,6 @@ import { logger, sendSuccess, sendMessage, sendError } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
 
-dotenv.config();
 export const loginUser = async (request, response) => {
 	//  Codes that we might return coming from status
 	const { UNAUTHROIZED } = status;

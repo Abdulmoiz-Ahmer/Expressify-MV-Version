@@ -1,8 +1,5 @@
-import dotenv from 'dotenv';
 import { logger, sendMessage, sendError } from '~/utils';
 import { status } from '~/constants';
-
-dotenv.config();
 
 // eslint-disable-next-line consistent-return
 export const authorize = (request, response, next) => {

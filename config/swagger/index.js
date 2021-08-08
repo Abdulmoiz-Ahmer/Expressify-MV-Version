@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 // Swagger Configuration
 export const swagger = {
 	swaggerDefinition: {

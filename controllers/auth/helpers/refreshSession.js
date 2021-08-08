@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
@@ -7,7 +6,6 @@ import { logger, sendSuccess, sendError, sendMessage } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
 
-dotenv.config();
 export const refreshSession = async (request, response) => {
 	//  Codes that we might return coming from status
 	const { FORBIDDEN, PRE_CONDITION_FAILED } = status;

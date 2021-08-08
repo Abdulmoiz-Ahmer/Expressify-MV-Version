@@ -1,11 +1,8 @@
-import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { logger, sendSuccess, sendMessage, sendError } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
-
-dotenv.config();
 
 export const changePassword = async (request, response) => {
 	//  Codes that we might return coming from status

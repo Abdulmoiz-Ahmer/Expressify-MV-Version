@@ -1,9 +1,7 @@
-import dotenv from 'dotenv';
 import Validator from 'validatorjs';
 import { status } from '~/constants';
 import { sendResponse } from '~/utils';
 
-dotenv.config();
 
 export const validate = (request, response, next, data, rules, msg = {}) => {
 	const { UNPROCESSABLE_ENTITY } = status;

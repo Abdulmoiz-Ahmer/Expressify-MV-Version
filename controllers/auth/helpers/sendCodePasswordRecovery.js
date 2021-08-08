@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { randomBytes } from 'crypto';
 import { logger, sendMail, sendMessage, sendError, sendSuccess } from '~/utils';
@@ -6,7 +5,6 @@ import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
 import { OtpsSchema } from '~/schemas/Otps';
 
-dotenv.config();
 export const sendCodePasswordRecovery = async (request, response) => {
 	//  Codes that we might return coming from status
 	const { UNAUTHROIZED } = status;
@@ -203,7 +201,7 @@ export const sendCodePasswordRecovery = async (request, response) => {
     `;
 
 		//  Invoking the email sent method
-		sendMail(
+		const result = await sendMail(
 			email,
 			'Password Recovery',
 			'Password Recovery Code: **************',
@@ -211,11 +209,13 @@ export const sendCodePasswordRecovery = async (request, response) => {
 		);
 
 		//  Sending response in case everything went well!
-
-		return sendSuccess(
-			{ otp, message: 'Otp sent please check your email' },
-			response,
-		);
+		if (result.length > 0 && result[0]?.statusCode)
+			return sendSuccess(
+				{ otp, message: 'Otp sent please check your email', result },
+				response,
+			);
+		// In case we failed
+		return sendError('Try Again', response);
 	} catch (exception) {
 		//  Log in case of any abnormal crash
 		logger('error', 'Error:', exception.message);

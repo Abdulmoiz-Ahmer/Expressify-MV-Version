@@ -1,8 +1,5 @@
-import dotenv from 'dotenv';
 import faker from 'faker';
 import { generateEmail } from './generateEmail';
-
-dotenv.config();
 
 export const dummyPassword = 'Password@8';
 export const dummyPassword2 = 'Password@88';

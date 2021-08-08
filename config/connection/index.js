@@ -1,17 +1,10 @@
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { logger } from '~/utils';
 
-dotenv.config();
-
-const connectionString =
-	process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing'
-		? process.env.CONNECTION_STRING_TESTING
-		: process.env.CONNECTION_STRING_PRODUCTION;
 
 // Mongoose connection
 mongoose
-	.connect(connectionString, {
+	.connect(process.env.CONNECTION_STRING_MONGO, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false,

@@ -1,11 +1,8 @@
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { logger, sendMessage, sendError } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
-
-dotenv.config();
 
 // eslint-disable-next-line consistent-return
 export const auth = async (request, response, next) => {

@@ -1,8 +1,5 @@
-import dotenv from 'dotenv';
 import { status } from '~/constants';
 import { logger } from '../logger/index';
-
-dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -27,7 +24,7 @@ export const sendError = (message, response, exception) => {
 		returnData.error =
 			(exception.name ? `${exception.name} : ` : '') + exception.message;
 	}
-	logger('Warning', 'message:', exception);
+	logger('warning', 'message:', exception);
 
 	return response.status(status.SERVER_ERROR).json(returnData);
 };
