@@ -15,6 +15,8 @@
 - Register, Login and Password Recovery, Password Change calls are already a part of the boilerplate.
 - Swagger UI with JS Doc is also part of the boilerplate. You can access the api's through ui using route (/api-docs).
 - Test Cases using mocha, chai and chaihttp are also part of the boilerplate.
+- Seeders are also available to run use seed command with your package manager.
+- Precommit hook is part of this boilerplate configured with linting and prettier
 
 
 ## Swagger Route Showing Availble Api's
@@ -58,6 +60,20 @@ npm install
 npm run server
 ```
 
+Install nodemodules and execute seeders.
+
+```
+yarn install
+yarn seed
+```
+
+or
+
+```
+npm install
+npm run seed
+```
+
 ## Usage
 
 ```
@@ -73,9 +89,9 @@ REQUEST: Headers {
 REQUEST: Body {
     "email":"email",
     "password":"Password"
-    "confirm_password":"Password"
+    "confirmPassword":"Password"
 }
-INVOKE: curl -X POST -H "Content-Type: application/json" -H 'x-api-key:<insert-api-key-here>' -d '{"email":"<insert-email-here>","password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/register
+INVOKE: curl -X POST -H "Content-Type: application/json" -H 'x-api-key:<insert-api-key-here>' -d '{"email":"<insert-email-here>","password":"<insert-password-here>","confirmPassword":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/register
 ```
 
 ```
@@ -87,7 +103,7 @@ REQUEST: Headers {
 REQUEST: Body {
 "email": "email",
 "password": "Password",
-"remember_me": false //optional
+"rememberMe": false //optional
 }
 INVOKE: curl -X POST -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -d '{"email":"<insert-email-here>","password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/login
 ```
@@ -96,10 +112,10 @@ INVOKE: curl -X POST -H "Content-Type: application/json"  -H 'x-api-key:<insert-
 METHOD: PUT
 PATH: /auth/refresh-session
 REQUEST: Headers {
-    refresh_token:<refresh-token>
+    refreshToken:<refresh-token>
     x-api-key:<api-key>
 }
-INVOKE: curl -X PUT -H "refresh_token:<refresh-token-here>"  -H 'x-api-key:<insert-api-key-here>'  http://localhost:4000/api/v1/auth/refresh-session
+INVOKE: curl -X PUT -H "refreshToken:<refresh-token-here>"  -H 'x-api-key:<insert-api-key-here>'  http://localhost:4000/api/v1/auth/refresh-session
 ```
 
 ```
@@ -123,9 +139,9 @@ REQUEST: Headers {
 REQUEST: Body {
     "otp":"otp code",
     "password":"Password",
-    "confirm_password":"Password"
+    "confirmPassword":"Password"
 }
-INVOKE: curl -X PATCH -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -d '{"otp":"<otp-code-here>","password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/reset-password
+INVOKE: curl -X PATCH -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -d '{"otp":"<otp-code-here>","password":"<insert-password-here>","confirmPassword":"<insert-password-here>"}' http://localhost:4000/api/v1/auth/reset-password
 ```
 
 ```
@@ -133,7 +149,7 @@ METHOD: GET
 PATH: /test
 REQUEST: Headers {
     api_key:<api_key>
-    refresh_token:<refresh-token>
+    refreshToken:<refresh-token>
 }
 INVOKE: curl -H 'x-api-key:<api-key-here>' http://localhost:4000/api/v1/test
 ```
@@ -146,12 +162,12 @@ REQUEST: Headers {
         x-api-key:<api-key>
 }
 REQUEST: Body {
-    "old_password":"Password",
-    "new_password":"Password",
-    "confirm_password":"Password"
+    "oldPassword":"Password",
+    "newPassword":"Password",
+    "confirmPassword":"Password"
 }
 
- INVOKE: curl -X PATCH  -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -H "authorization:bearer <insert-access-token-here>"  -d '{"old_password":"<insert-password-here>","new_password":"<insert-password-here>","confirm_password":"<insert-password-here>"}' http://localhost:4000/api/v1/profile-settings/change-password
+ INVOKE: curl -X PATCH  -H "Content-Type: application/json"  -H 'x-api-key:<insert-api-key-here>' -H "authorization:bearer <insert-access-token-here>"  -d '{"oldPassword":"<insert-password-here>","newPassword":"<insert-password-here>","confirmPassword":"<insert-password-here>"}' http://localhost:4000/api/v1/profile-settings/change-password
 ```
 
 ```
