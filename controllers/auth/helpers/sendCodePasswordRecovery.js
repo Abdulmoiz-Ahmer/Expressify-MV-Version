@@ -3,7 +3,6 @@ import { randomBytes } from 'crypto';
 import { logger, sendMail, sendMessage, sendError, sendSuccess } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
-import { OtpsSchema } from '~/schemas/Otps';
 
 export const sendCodePasswordRecovery = async (request, response) => {
 	//  Codes that we might return coming from status
@@ -20,26 +19,28 @@ export const sendCodePasswordRecovery = async (request, response) => {
 			return sendMessage('Email does not exist', response, UNAUTHROIZED);
 
 		//  Expiring all the previously sent otps of the same user
-		await OtpsSchema.updateMany(
+		await UserSchema.updateMany(
 			{
-				status: 'sent',
+				'otps.status': 'sent',
 				// eslint-disable-next-line no-underscore-dangle
-				user_id: new mongoose.Types.ObjectId(isExisting._id),
+				_id: new mongoose.Types.ObjectId(isExisting._id),
 			},
-			{ $set: { status: 'expired' } },
+			{ $set: { 'otps.$.status': 'expired' } },
 		);
 
 		//  Generating the new otp
-		const otp = await randomBytes(30).toString('hex');
+		const code = await randomBytes(30).toString('hex');
+		const newOtp = {
+			code,
+			expiration_timestamp: Date.now() + 3600000,
+		};
 
-		//  Saving new otp in the OtpsSchema
-		const newOtp = new OtpsSchema({
-			otp,
-			otp_expiration_timestamp: Date.now() + 3600000,
+		//  Saving new otp in the Schema
+		await UserSchema.updateOne(
 			// eslint-disable-next-line no-underscore-dangle
-			user_id: isExisting._id,
-		});
-		await newOtp.save();
+			{ _id: isExisting._id },
+			{ $addToSet: { otps: newOtp } },
+		);
 
 		//  Creating html template to sent in email
 		const HtmlTemplate = `
@@ -161,7 +162,7 @@ export const sendCodePasswordRecovery = async (request, response) => {
                                             </p>
                                           
                                             <a
-                                              href="${process.env.FRONTEND_URL}/reset-password/${otp}"
+                                              href="${process.env.FRONTEND_URL}/reset-password/${code}"
                                               style="
                                                 background: #20e277;
                                                 text-decoration: none !important;
@@ -211,7 +212,10 @@ export const sendCodePasswordRecovery = async (request, response) => {
 		//  Sending response in case everything went well!
 		if (result.length > 0 && result[0]?.statusCode)
 			return sendSuccess(
-				{ otp, message: 'Otp sent please check your email', result },
+				{
+					otp: code,
+					message: 'Otp sent please check your email',
+				},
 				response,
 			);
 		// In case we failed

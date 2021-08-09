@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { tokenInfo } from '../helpers/tokenInfo';
+import { tokenInfo, otpInfo } from '../helpers';
 
 const User = new mongoose.Schema({
 	email: {
@@ -13,6 +13,7 @@ const User = new mongoose.Schema({
 		last: { type: String },
 	},
 	tokens: [tokenInfo],
+	otps: [otpInfo],
 	remember_me: {
 		type: Boolean,
 		default: false,

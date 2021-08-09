@@ -5,6 +5,6 @@
 	},
 	"delay": "1500",
 	"env": {
-		"NODE_ENV": "staging"
+		"NODE_ENV": "dev"
 	}
 }
