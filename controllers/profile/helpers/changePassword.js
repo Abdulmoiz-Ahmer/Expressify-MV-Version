@@ -30,20 +30,13 @@ export const changePassword = async (request, response) => {
 		if (!passValidation)
 			return sendMessage('Wrong Credentials!', response, UNAUTHROIZED);
 
-		//  Generating hash of the new password
-
-		const passHash = await bcrypt.hash(
-			newPassword,
-			parseInt(process.env.SALT_ROUNDS, 10),
-		);
-
 		//  Updating the password
 		await UserSchema.updateOne(
 			{
 				// eslint-disable-next-line no-underscore-dangle
 				_id: new mongoose.Types.ObjectId(isExisting._id),
 			},
-			{ $set: { password: passHash } },
+			{ $set: { password: newPassword } },
 		);
 
 		//  Sending response in case everything went well!

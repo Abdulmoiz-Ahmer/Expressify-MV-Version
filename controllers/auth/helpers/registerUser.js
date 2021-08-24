@@ -11,6 +11,7 @@ export const registerUser = async (request, response) => {
 
 	//  Destructuring email & password from body
 	const { email, password, name } = request.body;
+	
 	try {
 		//  Making sure that the user exists
 		const isExisting = await UserSchema.findOne({ email }, { _id: 1 });
@@ -23,16 +24,10 @@ export const registerUser = async (request, response) => {
 			);
 		}
 
-		//  Generating the hash of the password
-		const passHash = await bcrypt.hash(
-			password,
-			parseInt(process.env.SALT_ROUNDS, 10),
-		);
-
 		//  Registering the user
 		const newUser = new UserSchema({
 			email,
-			password: passHash,
+			password,
 			name,
 		});
 		await newUser.save();

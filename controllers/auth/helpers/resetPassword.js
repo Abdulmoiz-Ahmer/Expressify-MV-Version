@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
 import { logger, sendSuccess, sendMessage, sendError } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
@@ -38,12 +37,6 @@ export const resetPassword = async (request, response) => {
 		)
 			return sendMessage('Code Expired', response, UNAUTHROIZED);
 
-		//  Generating the hash of password
-		const passHash = await bcrypt.hash(
-			password,
-			parseInt(process.env.SALT_ROUNDS, 10),
-		);
-
 		//  Updating the password and expiring statuses
 		await UserSchema.updateOne(
 			{
@@ -51,7 +44,7 @@ export const resetPassword = async (request, response) => {
 				_id: mongoose.Types.ObjectId(existingOtp._id),
 				'otps.status': 'sent',
 			},
-			{ $set: { password: passHash, 'otps.$.status': 'expired' } },
+			{ $set: { password, 'otps.$.status': 'expired' } },
 		);
 
 		//  Sending response in case everything went well!
