@@ -6,7 +6,7 @@ import { UserSchema } from '~/schemas/User';
 
 export const changePassword = async (request, response) => {
 	//  Codes that we might return coming from status
-	const { UNAUTHROIZED } = status;
+	const { UNAUTHORIZED } = status;
 
 	//  Destructuring old_password, new_password from the body
 	const { oldPassword, newPassword } = request.body;
@@ -19,7 +19,7 @@ export const changePassword = async (request, response) => {
 		const isExisting = await UserSchema.findById(userId, { password: 1 });
 
 		if (!isExisting)
-			return sendMessage('Wrong Credentials', response, UNAUTHROIZED);
+			return sendMessage('Wrong Credentials', response, UNAUTHORIZED);
 
 		//  Verifying the old password
 		const passValidation = await bcrypt.compare(
@@ -28,7 +28,7 @@ export const changePassword = async (request, response) => {
 		);
 
 		if (!passValidation)
-			return sendMessage('Wrong Credentials!', response, UNAUTHROIZED);
+			return sendMessage('Wrong Credentials!', response, UNAUTHORIZED);
 
 		//  Updating the password
 		await UserSchema.updateOne(

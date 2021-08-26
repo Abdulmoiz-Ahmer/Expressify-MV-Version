@@ -6,7 +6,7 @@ import { UserSchema } from '~/schemas/User';
 
 export const sendCodePasswordRecovery = async (request, response) => {
 	//  Codes that we might return coming from status
-	const { UNAUTHROIZED } = status;
+	const { UNAUTHORIZED } = status;
 
 	//  Destructuring email from headers
 	const { email } = request.headers;
@@ -16,7 +16,7 @@ export const sendCodePasswordRecovery = async (request, response) => {
 		const isExisting = await UserSchema.findOne({ email }, { _id: 1 });
 
 		if (!isExisting)
-			return sendMessage('Email does not exist', response, UNAUTHROIZED);
+			return sendMessage('Email does not exist', response, UNAUTHORIZED);
 
 		//  Expiring all the previously sent otps of the same user
 		await UserSchema.updateMany(

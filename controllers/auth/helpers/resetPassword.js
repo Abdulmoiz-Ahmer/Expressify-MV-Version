@@ -5,7 +5,7 @@ import { UserSchema } from '~/schemas/User';
 
 export const resetPassword = async (request, response) => {
 	//  Codes that we might return coming from status
-	const { UNAUTHROIZED } = status;
+	const { UNAUTHORIZED } = status;
 
 	//  Destructuring otp, password from body
 	const { password, otp } = request.body;
@@ -20,11 +20,11 @@ export const resetPassword = async (request, response) => {
 		);
 
 		if (!existingOtp.otps.length === 0)
-			return sendMessage('Invalid Code', response, UNAUTHROIZED);
+			return sendMessage('Invalid Code', response, UNAUTHORIZED);
 
 		//  Verifying that the otp is not manually expired
 		if (existingOtp.otps[0]?.status === 'expired')
-			return sendMessage('Code Expired', response, UNAUTHROIZED);
+			return sendMessage('Code Expired', response, UNAUTHORIZED);
 
 		//  Verifying that the otp is not expired
 		if (
@@ -35,7 +35,7 @@ export const resetPassword = async (request, response) => {
 				60 >
 			1
 		)
-			return sendMessage('Code Expired', response, UNAUTHROIZED);
+			return sendMessage('Code Expired', response, UNAUTHORIZED);
 
 		//  Updating the password and expiring statuses
 		await UserSchema.updateOne(

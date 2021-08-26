@@ -7,7 +7,7 @@ import { UserSchema } from '~/schemas/User';
 
 export const loginUser = async (request, response) => {
 	//  Codes that we might return coming from status
-	const { UNAUTHROIZED } = status;
+	const { UNAUTHORIZED } = status;
 
 	//  Destructuring email & password from body
 	const { email, password } = request.body;
@@ -21,7 +21,7 @@ export const loginUser = async (request, response) => {
 			{ _id: 1, password: 1, name: 1, remember_me: 1 },
 		);
 		if (!isExisting)
-			return sendMessage('Invalid credentials', response, UNAUTHROIZED);
+			return sendMessage('Invalid credentials', response, UNAUTHORIZED);
 
 		//  Verifying the password
 		const passValidation = await bcrypt.compare(
@@ -30,7 +30,7 @@ export const loginUser = async (request, response) => {
 		);
 
 		if (!passValidation)
-			return sendMessage('Invalid credentials', response, UNAUTHROIZED);
+			return sendMessage('Invalid credentials', response, UNAUTHORIZED);
 
 		//  Generating hash for the tokens secret
 		const hash = await bcrypt.hash(

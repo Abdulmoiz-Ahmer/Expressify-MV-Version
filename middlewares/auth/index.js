@@ -7,7 +7,7 @@ import { UserSchema } from '~/schemas/User';
 // eslint-disable-next-line consistent-return
 export const auth = async (request, response, next) => {
 	//	Codes that we might return coming from status
-	const { UNAUTHROIZED, PRE_CONDITION_FAILED, FORBIDDEN } = status;
+	const { UNAUTHORIZED, PRE_CONDITION_FAILED, FORBIDDEN } = status;
 
 	// Expecting authorization field in header starting bearer followed by space and token
 	if (
@@ -17,7 +17,7 @@ export const auth = async (request, response, next) => {
 		return sendMessage(
 			'Access Denied! No Token Provided',
 			response,
-			UNAUTHROIZED,
+			UNAUTHORIZED,
 		);
 
 	try {
